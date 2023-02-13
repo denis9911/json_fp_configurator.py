@@ -11,13 +11,22 @@ for i, name in enumerate(all_names):
     num_and_names.append(f'{i + 1}. ' + name)
 main_menu_switcher = True
 
+
 def main_menu():
     print(*[str(i) for i in num_and_names], sep='\n')
     user_num = int(input('Выберите раздел для ключа:\n'))
     selecting_user_section = data[user_num - 1]["name"]
-    print(f'В этом разделе {len(data[user_num - 1]["nodes"])} ключей')
-    print(f'Ваши текущие ключи в разделе "{selecting_user_section}":')
+    # print(f'В этом разделе {len(data[user_num - 1]["nodes"])} ключей')
+    # print(f'Ваши текущие ключи в разделе "{selecting_user_section}":')
     keys_list = data[user_num - 1]['nodes']
+    if 'Лиги' in selecting_user_section:
+        key_tutorial = 'Чтобы получить инструкцию по активации напиши мне "!инструкция"\nTo receive activation instructions write me "!instruction"\nИнформация по горячим главишам: "!горячие_клавиши"\nHotkeys information: "!hotkeys"'
+    elif 'ARK' in selecting_user_section:
+        key_tutorial = 'Cсылка на скачивание|Link for download: https://mega.nz/file/3lwACIyZ#7bbdZOC9u1P66HNelaY_ypZ9luNG9dmZSeyZadaRsd8=start\nЧтобы получить инструкцию по активации напиши мне \"!инструкция_арк\"\nTo receive activation instructions write me \"!instruction_ark\"'
+    elif 'PUBG' in selecting_user_section:
+        key_tutorial = 'Cсылка на скачивание|Link for download: https://mega.nz/file/3lwACIyZ#7bbdZOC9u1P66HNelaY_ypZ9luNG9dmZSeyZadaRsd8\nЧтобы получить инструкцию по активации напиши мне \"!инструкция_pubg\"\nTo receive activation instructions write me \"!instruction_pubg\"'
+    else:
+        return 'Ошибка в названии раздела, возможно не добавлено описание в скрипт'
     l = []
     for i, key in enumerate(keys_list):
         l.append(f"{i + 1}. " + key.split("\n")[0])
@@ -32,7 +41,7 @@ def main_menu():
                 stopper = False
             else:
                 keys_list.append(
-                    f'{new_user_key}\nЧтобы получить инструкцию по активации напиши мне "!инструкция"\nTo receive activation instructions write me "!instruction"\nИнформация по горячим главишам: "!горячие_клавиши"\nHotkeys information: "!hotkeys"')
+                    f'{new_user_key}\n{key_tutorial}')
                 print(f'Ключ {new_user_key} добавлен в раздел "{selecting_user_section}"')
                 count_keys += 1
         return f'Вы успешно добавили {count_keys} ключей'
